@@ -1,0 +1,85 @@
+<head>
+    <meta charset="UTF-8">
+    <title>简易安装 Vue.js</title>
+    <script src="https://cdn.jsdelivr.net/vue/2.1.3/vue.js"></script>
+</head>
+<div id="app">
+    公众号：{{ name }}
+</div>
+<div id="app1">
+    <input v-model="number">
+    <p>数字:{{ number }}</p>
+</div>
+<div id="app2">
+    <card></card>
+    <card></card>
+    <card></card>
+</div>
+<div id="app3">
+    数字1：{{ num1 | toInt}}<br>
+    数字2：{{ num2 | toInt}}<br>
+    数字3：{{ num3 | toInt}}<br>
+    总和：{{sum}}
+</div>
+<div id="app4">
+    {{a}}
+  <button v-on:click="plus">plus 1</button>
+</div>
+
+<script>
+    let vm3 = new Vue({
+        el: "#app3",
+        data: {
+            num1: 22.111,
+            num2: 33.111,
+            num3: 44.222
+        },
+        filters: {
+            toInt(value) {
+                return parseInt(value);
+            }
+        },
+        computed: {
+            sum() {
+                return this.num1 + this.num2 + this.num3;
+            }
+        }
+    });
+
+
+    //注册一个名叫card的组件
+    Vue.component('card', {
+        template: `<div>
+           <img src="logo.png" alt="">
+           <h2>web前端教程</h2>
+           <p>这里是描述，很长的描述</p>
+           <button>我是按钮</button>
+       </div>`
+    });
+
+    new Vue({
+        el: "#app2"
+    });
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            name: "web前端教程",
+        }
+    });
+
+  
+    let vm4 = new Vue({
+        //挂载元素
+        el: '#app4',
+        //实例vm的数据
+        data: {
+            a: 0
+        },
+        //方法
+        methods: {
+            plus() {
+                return this.a++;
+            }
+        }
+    });
+</script>
