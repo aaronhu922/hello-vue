@@ -23,7 +23,7 @@
 </div>
 <div id="app4">
     {{a}}
-  <button v-on:click="plus">plus 1</button>
+    <button v-on:click="plus">plus 1</button>
 </div>
 
 <script>
@@ -67,7 +67,7 @@
         }
     });
 
-  
+
     let vm4 = new Vue({
         //挂载元素
         el: '#app4',
@@ -80,6 +80,19 @@
             plus() {
                 return this.a++;
             }
+        },
+
+        watch: {
+            a() {
+                console.log('a变化了，有新值！');
+                console.log(this.a);
+            }
+        },
+
+        created() {
+            console.log('创建完毕');
+            console.log(this.$data);
+            console.log(this.$el);
         }
     });
 </script>
