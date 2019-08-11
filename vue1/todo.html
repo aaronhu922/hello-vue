@@ -1,0 +1,60 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,
+                   maximum-scale=1.0">
+    <title>任务列表</title>
+    <!--载入vue.2.0.js文件-->
+    <script src="https://cdn.jsdelivr.net/vue/2.1.3/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+<div id="app">
+    <input @keydown.enter="addTask" class="edit" type="text" v-model="task.content" placeholder="编写任务">
+
+    <div class="list">
+        <div class="unit" v-for="(item,index) in list">
+            <input @click="changeState(index)" :checked="item.finished" type="checkbox">
+            <span :class="{'finish':item.finished}">
+                {{item.content}}
+             </span>
+            <button @click="removeTask(index)" class="del">
+                删除
+            </button>
+        </div>
+        <p v-if="list.length === 0" class="empty">
+            暂无任务
+         </p>
+    </div>
+</div>
+
+<script>
+    const app = new Vue({
+        el: "#app",
+        data: {
+            task: {
+                content: '',
+                finished: false,
+                deleted: false
+            },
+            list: []
+        },
+        methods: {
+            addTask: function () {
+                this.list.push(this.task);
+                this.task = {
+                    content: '',//内容为空
+                    finished: false,//未完成
+                    deleted: false//未删除
+                }
+
+            },
+            //点击修改任务状态
+            changeState: function (index) {
+                let curState = this.list[index].finished;
+                this.list[index].finished = !curState;
+            },
+            removeTask: function (index) {
+                this.list.splice(index, 1);
+            }
+        }
+    });
+</script>

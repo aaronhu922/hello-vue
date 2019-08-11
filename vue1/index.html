@@ -25,6 +25,10 @@
     {{a}}
     <button v-on:click="plus">plus 1</button>
 </div>
+<div id="app5">
+    <son :message="msg"></son>
+    <son1 @connect="say"></son1>
+</div>
 
 <script>
     let vm3 = new Vue({
@@ -95,4 +99,43 @@
             console.log(this.$el);
         }
     });
+
+
+    Vue.component('son', {
+        props: ['message'],
+        template: `<div>{{message}}</div>`
+    });
+
+    Vue.component('son1', {
+        template: `<button @click="send">
+                点击
+             </button>`,
+
+        data() {
+            return {
+                msg: '大家好，我是子组件的数据'
+            }
+        },
+        methods: {
+            send() {
+                this.$emit('connect', this.msg);
+            }
+        }
+    });
+
+    //创建一个vue实例
+    const vm5 = new Vue({
+        el: "#app5",
+        data: {
+            msg: "我是父组件的数据"
+        },
+        methods: {
+            say(msg) {
+                console.log(msg);
+            }
+        }
+    });
+
+
+
 </script>
